@@ -1,0 +1,39 @@
+# What docker image that will be used
+FROM postgres:9.6
+
+
+# Args
+ARG SERVER_FILE="main.py"
+ARG MAINTAINER="Christopher Ek"
+ARG AUTHOR="Christopher Ek"
+ARG PORT_LISTEN="8000"
+
+ENV FILE=$SERVER_FILE
+
+ENV POSTGRES_HOST=postgres
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
+ENV POSTGRES_DB=postgres
+
+
+# Labels
+LABEL author=$AUTHOR
+LABEL maintainer=$MAINTAINER
+LABEL version="0.1"
+LABEL desc="Lorem ipsum"
+
+/*
+* Create a postgres database
+*/
+
+RUN psql -c "CREATE DATABASE $POSTGRES_DB;"
+RUN psql -c "CREATE USER $POSTGRES_USER WITH PASSWORD '$POSTGRES_PASSWORD';"
+RUN psql -c "GRANT ALL PRIVILEGES ON DATABASE $POSTGRES_DB TO $POSTGRES_USER;"
+
+# APP_PORT == 5000
+# WORKER_PORT == 5001
+# DB_PORT == 5432
+EXPOSE 5432
+
+
+
