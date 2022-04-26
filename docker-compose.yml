@@ -2,17 +2,18 @@ version: '3'
 
 services:
   frontend-web:
-    build: ./frontend-app/Dockerfile
+    build: ./frontend-chek/Dockerfile
     container_name: 'frontend'
     ports:
       - '5000:5000'
   worker-backend:
-    build: ./backend/Dockerfile
-    container_name: 'worker-chek-backend'
+    build: ./worker-chek/Dockerfile
+    container_name: 'Jenkins'
     ports:
-      - '0:0'
+      - '8080:8080'
+      - '50000:50000'
   db:
-    build: ./db/Dockerfile
+    image: postgres:9.6
     container_name: 'db'
     environment:
       - POSTGRES_USER=postgres
@@ -37,6 +38,6 @@ services:
       PMA_ARBITRARY: 1
     restart: always
     ports:
-      - '8080:80'
+      - '80:80'
     volumes:
       - './db:/var/lib/postgresql/data'
