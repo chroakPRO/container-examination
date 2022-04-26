@@ -1,4 +1,6 @@
 version: '3'
+### build or image can be used as mainpoint.
+
 
 services:
   frontend-web:
